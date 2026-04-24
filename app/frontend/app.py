@@ -28,10 +28,10 @@ def classify_image(image):
             return f"Prediction: {prediction}", f"Confidence: {confidence:.4f}", f"Latency: {latency:.4f}"
 
         else:
-            return f"Error: {response.json().get('detail')}", None
+            return f"Error: {response.json().get('detail')}", "", ""
 
     except Exception as e:
-        return f"Connection error: {str(e)}", None
+        return f"Connection error: {str(e)}", "", ""
 
 
 iface = gr.Interface(
@@ -47,5 +47,6 @@ iface = gr.Interface(
 )
 
 if __name__ == "__main__":
-    # iface.launch()
+    # iface.launch() # default address is 127.0.0.1:7860
+    # iface.launch(share=True)
     iface.launch(server_name="0.0.0.0", server_port=7860)
