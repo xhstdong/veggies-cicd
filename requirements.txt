@@ -1,5 +1,7 @@
 fastapi
-gradio==5.20.1
+requests>=2.31.0
+gradio>=5.15.0
+gradio-client>=1.5.0
 Pillow==11.1.0
 torch==2.5.1
-torchvision==0.21
+torchvision==0.20.1

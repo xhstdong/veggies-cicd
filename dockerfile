@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 7860
 
-CMD bash -c "uvicorn app.main:app --host 0.0.0.0 --port 7860 & python frontend/app.py"
+CMD bash -c "uvicorn app.main:app --host 0.0.0.0 --port 8000 & python app/frontend/app.py"
