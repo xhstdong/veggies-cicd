@@ -3,7 +3,7 @@ title: Veggies
 emoji: 🌍
 colorFrom: pink
 colorTo: red
-sdk: gradio
+sdk: docker
 sdk_version: 5.20.1
 app_file: app.py
 pinned: false
