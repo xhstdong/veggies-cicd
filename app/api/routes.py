@@ -8,12 +8,12 @@ from app.metrics import metrics
 
 router = APIRouter()
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # instantiate model and classifier
 # model loads once at startup instead of per request
-model = load_model("weights/veggie_model_weights.pth", device)
-classifier = VegetableClassifier(model, device)
+# model = load_model("weights/veggie_model_weights.pth", device)
+# classifier = VegetableClassifier(model, device)
 
 # asynchronous endpoints
 @router.post("/predict")
@@ -22,6 +22,7 @@ async def predict(request: Request, file: UploadFile = File(...)):
     endpoint to receive an image file and return the predicted class, confidence and latency.
     '''
     image_bytes = await file.read()
+    classifier = request.app.state.classifier
     return classify_image(classifier, image_bytes, request_id = request.state.request_id)
 
 @router.get("/metrics")
@@ -39,7 +40,10 @@ def get_metrics():
     }
 
 @router.get("/health")
-def health():
+def health(request: Request):
+     classifier = request.app.state.classifier
      return {
         "status": "ok",
-        "model_loaded": classifier is not None}
+        "model_loaded": classifier is not None,
+        "classifier_type": type(classifier).__name__
+            if classifier else None}

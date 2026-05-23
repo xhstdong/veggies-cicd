@@ -1,7 +1,11 @@
 from fastapi.testclient import TestClient
+import os
 from app.main import app
+from tests.test_classifier import DummyClassifier
 
 client = TestClient(app)
+app.state.classifier = DummyClassifier()
+os.environ["TESTING"] = "true"
 
 def test_health():
     response = client.get("/health")
@@ -40,3 +44,5 @@ def test_predict():
     assert "confidence" in data
     assert "latency" in data
     assert data["prediction"] == "Cucumber"
+    assert data["confidence"] == 0.99
+    assert data["latency"] == 0.1
