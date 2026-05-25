@@ -1,19 +1,9 @@
 from fastapi import APIRouter, UploadFile, File, Request
-import torch
 
-from app.model.loader import load_model
-from app.model.inference import VegetableClassifier
 from app.services.classifier_service import classify_image
 from app.metrics import metrics
 
 router = APIRouter()
-
-# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-# instantiate model and classifier
-# model loads once at startup instead of per request
-# model = load_model("weights/veggie_model_weights.pth", device)
-# classifier = VegetableClassifier(model, device)
 
 # asynchronous endpoints
 @router.post("/predict")
